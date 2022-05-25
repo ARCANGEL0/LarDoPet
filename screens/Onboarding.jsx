@@ -15,7 +15,7 @@ export default class Onboarding extends Component {
   render() {
     return (
     
-      <Swiper>
+      <Swiper navigation={this.props.navigation}>
       {/* First screen */}
       <View style={styles.slide}>
         <Image style={styles.img} source={require('../assets/images/banner1.jpg')}/>
