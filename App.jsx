@@ -24,17 +24,19 @@ const [primeiraVez, setPrimeiraVez] = useState(null)
   return (
       <NavigationContainer>
       <Stack.Navigator>
-<Stack.Screen 
+
+
+{ primeiraVez ?   <Stack.Screen 
         options={{headerShown: false}}
 
-        name="Onboarding" component={Onboarding} /> 
+        name="Onboarding" component={Onboarding} /> :
 
   <Stack.Screen 
 
                options={{headerShown: false}}
 
              name="Login" component={Login} />
-      
+      }
 
 
       
