@@ -10,7 +10,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
 
-const [primeiraVez, setPrimeiraVez] = useState(null)
+const [primeiraVez, setPrimeiraVez] = useState(true)
 
 
   useEffect(() => {

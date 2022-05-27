@@ -174,7 +174,7 @@ export default class OnboardingScreens extends Component {
 
 
           } />
-          : <Button text="Continuar" onPress={() => this.swipe()} />
+          : <Button color="#8eed92" text="Continuar" onPress={() => this.swipe()} />
         }
       </View>
     );

@@ -6,7 +6,7 @@ function CheckInicio() {
   AsyncStorage.setItem(PRIMEIRAVEZ, 'true');
 }
 
-export default async function checkIfFirstLaunch() {
+export default async function checkInicio() {
   try {
     const primeiroBoot = await AsyncStorage.getItem(PRIMEIRAVEZ);
     if (primeiroBoot === null) {
