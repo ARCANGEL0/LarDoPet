@@ -5,32 +5,130 @@ import {
   Text,
   View,
   Image,
+  ScrollView,
   TextInput,
   Button,
   TouchableOpacity,
 } from "react-native";
 
 import CheckBox from 'react-native-check-box'
-
-
+import IoIcons from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 
 
-export default function Login(props) {
+export default function Registrar(props) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [Focus1, setFocus1] = useState(false);
   const [Focus2, setFocus2] = useState(false);
   const [senhaVisivel, setSenhaVisivel] = useState(false);
-  const [isSelected, setSelection] = useState(false);
 
   return (
     <View style={styles.container}>
 
+        <View style={{flexDirection:'row'}} >
+        <TouchableOpacity
+
+        onPress={() => {
+            props.navigation.navigate('Login')
+}}>
+      <IoIcons   style={styles.icon} name="return-down-back" size={36} color="#aaaaaa" />
+</TouchableOpacity>
       <Image style={styles.image} source={require("../assets/images/2.png")} />
+ </View>
 
       <StatusBar style="auto" />
+<ScrollView
+vertical
+style={styles.scroll}
+>
+
+ <Text style={styles.inputText}> Nome </Text>
+
+      <View style={Focus1 ? styles.inputFocus : styles.inputView }>
+        <TextInput
+    onBlur={() => setFocus1(false)}
+        onFocus={() => setFocus1(true)}
+ placeholder="exemplo@gmail.com"
+          placeholderTextColor="#cccccc"
+                   style={styles.TextInput}
+          onChangeText={(email) => setEmail(email)}
+        />
+      </View>
+
+
+ <Text style={styles.inputText}> Nome </Text>
+
+      <View style={Focus1 ? styles.inputFocus : styles.inputView }>
+        <TextInput
+    onBlur={() => setFocus1(false)}
+        onFocus={() => setFocus1(true)}
+ placeholder="exemplo@gmail.com"
+          placeholderTextColor="#cccccc"
+                   style={styles.TextInput}
+          onChangeText={(email) => setEmail(email)}
+        />
+      </View>
+
+
+ <Text style={styles.inputText}> Nome </Text>
+
+      <View style={Focus1 ? styles.inputFocus : styles.inputView }>
+        <TextInput
+    onBlur={() => setFocus1(false)}
+        onFocus={() => setFocus1(true)}
+ placeholder="exemplo@gmail.com"
+          placeholderTextColor="#cccccc"
+                   style={styles.TextInput}
+          onChangeText={(email) => setEmail(email)}
+        />
+      </View>
+
+
+ <Text style={styles.inputText}> Nome </Text>
+
+      <View style={Focus1 ? styles.inputFocus : styles.inputView }>
+        <TextInput
+    onBlur={() => setFocus1(false)}
+        onFocus={() => setFocus1(true)}
+ placeholder="exemplo@gmail.com"
+          placeholderTextColor="#cccccc"
+                   style={styles.TextInput}
+          onChangeText={(email) => setEmail(email)}
+        />
+      </View>
+
+
+ <Text style={styles.inputText}> Nome </Text>
+
+      <View style={Focus1 ? styles.inputFocus : styles.inputView }>
+        <TextInput
+    onBlur={() => setFocus1(false)}
+        onFocus={() => setFocus1(true)}
+ placeholder="exemplo@gmail.com"
+          placeholderTextColor="#cccccc"
+                   style={styles.TextInput}
+          onChangeText={(email) => setEmail(email)}
+        />
+      </View>
+
+
+ <Text style={styles.inputText}> Nome </Text>
+
+      <View style={Focus1 ? styles.inputFocus : styles.inputView }>
+        <TextInput
+    onBlur={() => setFocus1(false)}
+        onFocus={() => setFocus1(true)}
+ placeholder="exemplo@gmail.com"
+          placeholderTextColor="#cccccc"
+                   style={styles.TextInput}
+          onChangeText={(email) => setEmail(email)}
+        />
+      </View>
+
+
+
                    <Text style={styles.inputText}> Email </Text>
 
       <View style={Focus1 ? styles.inputFocus : styles.inputView }>
@@ -44,7 +142,7 @@ export default function Login(props) {
         />
       </View>
 
-                  <Text style={styles.inputText}> Senha </Text>
+                  <Text style={styles.inputText}> Criar conta </Text>
  
       <View style={Focus2 ? styles.inputFocus : styles.inputView }>
 
@@ -73,55 +171,8 @@ export default function Login(props) {
                   </TouchableOpacity>
         {/*{ senhaVisivel ? <RiEye2Line/> : <RiEyeCloseFill/>}*/}
       </View>
- <View style={styles.opcoes}>
 
-<CheckBox
-checkedCheckBoxColor="#8eed92"
-uncheckedCheckBoxColor="#cecece"
-style={{marginLeft:10, marginTop: -3}}
-    onClick={()=>{
-      setSelection(!isSelected)
-    }}
-    isChecked={isSelected}
-/>
-        <Text style={styles.manter_conectado}>Me manter conectado</Text>
-
-
-      <TouchableOpacity>
-        <Text style={styles.redefinir}>Esqueceu a senha?</Text>
-      </TouchableOpacity>
-
-      </View>
- 
-      <TouchableOpacity style={styles.loginBtn}>
-                    <MaterialIcon   style={styles.icon} name="login" size={18} color="#53bd57" />
-
-        <Text style={styles.loginText}>LOGIN</Text>
-      </TouchableOpacity>
-
-       <TouchableOpacity style={styles.loginFace}>
-              <FontIcon  style={styles.icon} name="facebook" size={18} color="#2f4f91" />
-
-        <Text style={styles.loginText}>ENTRAR COM FACEBOOK</Text>
-      </TouchableOpacity>
-
-       <TouchableOpacity style={styles.loginGoogle}>
-       <FontIcon style={styles.icon} name="google" size={18} color="#d45f3f" />
-        <Text style={styles.loginText}>ENTRAR COM GOOGLE</Text>
-      </TouchableOpacity>
-<TouchableOpacity
-
-onPress={() => {
-            props.navigation.navigate('Registrar')
-}} >
-
-      <Text style={styles.criarConta}> Não possui uma conta?  &nbsp;
-       <Text style={{color:'#8eed92' , marginLeft: 10}}>
-
-      Crie sua conta </Text>
-       </Text>
-</TouchableOpacity>
-
+</ScrollView>
     </View>
   );
 }
@@ -129,19 +180,21 @@ onPress={() => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-paddingTop: 100,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
   image: {
     resizeMode: 'contain',
-    height: 200,
-    width: 200,
-marginTop: -100,
-marginBottom: 0
+    height: 150,
+    width: 150,
+    marginTop: 25,
+    marginRight: 90
 
+},
 
+scroll: {
+marginLeft: 30,
 },
 
 inputText: { 
@@ -186,7 +239,8 @@ manter_conectado: {
   color: '#66666'
 },
 icon: {
-  marginRight: 20
+  paddingRight: 50,
+  marginTop: 20,
 }
 ,
 criarConta: {
@@ -198,7 +252,7 @@ criarConta: {
     borderRadius: 10,
       borderWidth: 1,
     borderColor: "#c1c1c1",
-    width: "85%",
+    width: "90%",
   flexDirection: 'row',
 paddingLeft: 10,
    height: 45,

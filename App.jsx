@@ -3,6 +3,7 @@ import { StyleSheet, Text, View} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import Onboarding from './screens/Onboarding.jsx'
 import Login from './screens/Login.jsx';
+import Registrar from './screens/Registrar.jsx'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import checkInicio from './components/checkInicio.jsx'
@@ -40,7 +41,11 @@ const [primeiraVez, setPrimeiraVez] = useState(true)
 
 
       
-        
+          <Stack.Screen 
+
+               options={{headerShown: false}}
+
+             name="Registrar" component={Registrar} />
 
       
            
