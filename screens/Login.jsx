@@ -87,7 +87,11 @@ style={{marginLeft:10, marginTop: -3}}
         <Text style={styles.manter_conectado}>Me manter conectado</Text>
 
 
-      <TouchableOpacity>
+      <TouchableOpacity
+onPress={() => {
+            props.navigation.navigate('Redefinir')
+}} 
+      >
         <Text style={styles.redefinir}>Esqueceu a senha?</Text>
       </TouchableOpacity>
 

@@ -168,7 +168,7 @@ export default class OnboardingScreens extends Component {
       <View pointerEvents="box-none" style={[styles.buttonWrapper, styles.fullScreen]}>
         {lastScreen
           ? <Button text="Entrar" onPress={() =>
-            this.props.navigation.navigate('Login')
+        this.props.navigation.navigate('Login')
           
 
 

@@ -11,10 +11,16 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+import Axios from 'axios';
+
+import { ActivityIndicator } from 'react-native';
+import { TextInputMask } from 'react-native-masked-text'
+
 import CheckBox from 'react-native-check-box'
 import IoIcons from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 
 export default function Registrar(props) {
@@ -28,6 +34,7 @@ export default function Registrar(props) {
   const [cep, setCep] = useState("");
 
   const [cidade, setCidade] = useState("");
+  const [bairro, setBairro] = useState("");
 
   const [endereco, setEndereco] = useState("");
   const [numero, setNumero] = useState("");
@@ -36,6 +43,8 @@ export default function Registrar(props) {
   const [fSenha, setFsenha] = useState(false);
   const [fNome, setFnome] = useState(false);
   const [fTelefone, setFtelefone] = useState(false);
+  const [fBairro, setFbairro] = useState(false);
+
   const [fCelular, setFcelular] = useState(false);
   const [fCep, setFcep] = useState(false);
   const [fEndereco, setFendereco] = useState(false);
@@ -44,6 +53,39 @@ export default function Registrar(props) {
   const [fNumero, setFnumero] = useState(false);
 
   const [senhaVisivel, setSenhaVisivel] = useState(false);
+
+  const [isLoading, setLoading] = useState(false);
+
+
+
+
+
+
+
+  buscarCep = (cep) => {
+    Axios.get(`https://viacep.com.br/ws/`+cep+`/json/`)
+      .then(response => {
+       
+              setLoading(true);
+
+ setTimeout(() => {
+   console.log(response.data)
+        setCidade(response.data.localidade)
+        setEndereco(response.data.logradouro)
+        setBairro(response.data.bairro)}, 200);
+
+
+     
+
+        setTimeout(() => {
+        setLoading(false)
+}, 500);
+      })
+      .catch(error => {
+        return console.log(error);
+      })
+  }
+
 
   return (
     <View style={styles.container}>
@@ -59,27 +101,38 @@ export default function Registrar(props) {
       <Image style={styles.image} source={require("../assets/images/2.png")} />
  </View>
 
-
       <StatusBar style="auto" />
 
       <View style={styles.body}>
+
+{ isLoading ?
+<Spinner
+          visible={true}
+          textStyle={styles.spinnerTextStyle}
+        />
+
+        : null
+}
+ <View style={styles.formHeader}>
+      <Text style={styles.title}> Criar conta </Text>
+
+            <MaterialIcon   style={styles.pet} name="pets" size={20} color="#bbbbbb" />
+
+</View>
 
 <ScrollView
 vertical
 showsVerticalScrollIndicator={false}
 style={styles.scroll}
 >
-    <View style={styles.formHeader}>
-      <Text style={styles.title}> Criar conta </Text>
-            <MaterialIcon   style={styles.pet} name="pets" size={20} color="#cecece" />
-
-</View>
-
+   
 
  <Text style={styles.inputText}> Nome </Text>
 
       <View style={fNome ? styles.inputFocus : styles.inputView }>
         <TextInput
+         value={nome}
+
     onBlur={() => setFnome(false)}
         onFocus={() => setFnome(true)}
  placeholder=" "
@@ -96,7 +149,21 @@ style={styles.scroll}
  <Text style={styles.inputText}> Telefone </Text>
 
       <View style={fTelefone ? styles.inputFocus : styles.inputView }>
-        <TextInput
+        <TextInputMask
+         value={telefone}
+         type={'custom'}
+  options={{
+    /**
+     * mask: (String | required | default '')
+     * the mask pattern
+     * 9 - accept digit.
+     * A - accept alpha.
+     * S - accept alphanumeric.
+     * * - accept all, EXCEPT white space.
+    */
+    mask: '(99) 9999-9999'
+  }}
+
     onBlur={() => setFtelefone(false)}
         onFocus={() => setFtelefone(true)}
  placeholder=" "
@@ -110,13 +177,30 @@ style={styles.scroll}
  <Text style={styles.inputText}> Celular </Text>
 
       <View style={fCelular ? styles.inputFocus : styles.inputView }>
-        <TextInput
+        <TextInputMask
+         value={celular}
+
+type={'custom'}
+  options={{
+    /**
+     * mask: (String | required | default '')
+     * the mask pattern
+     * 9 - accept digit.
+     * A - accept alpha.
+     * S - accept alphanumeric.
+     * * - accept all, EXCEPT white space.
+    */
+    mask: '(99) 99999-9999'
+  }}
+
+
     onBlur={() => setFcelular(false)}
         onFocus={() => setFcelular(true)}
  placeholder=" "
+ value={celular}
           placeholderTextColor="#cccccc"
                    style={styles.TextInput}
-          onChangeText={(email) => setEmail(email)}
+          onChangeText={(celular) => setCelular(celular)}
         />
       </View>
 
@@ -127,13 +211,35 @@ style={styles.scroll}
  <Text style={styles.groupText}> CEP </Text>
 
       <View style={fCep ? styles.groupFocus : styles.groupView }>
-        <TextInput
+        <TextInputMask
+        type={'custom'}
+  options={{
+    /**
+     * mask: (String | required | default '')
+     * the mask pattern
+     * 9 - accept digit.
+     * A - accept alpha.
+     * S - accept alphanumeric.
+     * * - accept all, EXCEPT white space.
+    */
+    mask: '99999-999'
+  }}
+
+
     onBlur={() => setFcep(false)}
         onFocus={() => setFcep(true)}
  placeholder=" "
           placeholderTextColor="#cccccc"
                    style={styles.btnView}
-          onChangeText={(cep) => setCep(cep)}
+          onChangeText={(cepd) => 
+            {
+              console.log(isLoading);
+            buscarCep(cepd);
+           setCep(cepd);
+         }
+
+         }
+           value={cep}
         />
       </View>
       </View>
@@ -145,12 +251,16 @@ style={styles.scroll}
 
       <View style={fCidade ? styles.groupFocus : styles.groupView }>
         <TextInput
+         value={cidade}
+
     onBlur={() => setFcidade(false)}
         onFocus={() => setFcidade(true)}
  placeholder=" "
           placeholderTextColor="#cccccc"
                    style={styles.btnView}
-          onChangeText={(cidade) => setCidade(cidade)}
+          onChangeText={(cidade) =>  {
+
+            setCidade(cidade)}}
         />
       </View>
 
@@ -159,24 +269,65 @@ style={styles.scroll}
 </View>
 
 
-                   <Text style={styles.inputText}> Rua </Text>
+ <Text style={styles.inputText}> Bairro </Text>
 
-      <View style={fEndereco ? styles.inputFocus : styles.inputView }>
+      <View style={fBairro ? styles.inputFocus : styles.inputView }>
         <TextInput
+
+ 
+    onBlur={() => setFbairro(false)}
+        onFocus={() => setFbairro(true)}
+ placeholder=" "
+ value={bairro}
+          placeholderTextColor="#cccccc"
+                   style={styles.TextInput}
+          onChangeText={(bairro) => setBairro(bairro)}
+        />
+      </View>
+<View style={styles.inputGroup2}>
+
+<View style={styles.btnGroup}>
+
+                   <Text style={styles.groupText}> Rua </Text>
+
+      <View style={fEndereco ? styles.focusEndereco : styles.groupEndereco }>
+        <TextInput
+         value={endereco}
+
     onBlur={() => setFendereco(false)}
         onFocus={() => setFendereco(true)}
  placeholder=" "
           placeholderTextColor="#cccccc"
-                   style={styles.TextInput}
+                   style={styles.btnView}
           onChangeText={(endereco) => setEndereco(endereco)}
         />
       </View>
+</View>
 
+<View style={styles.btnGroup}>
 
+ <Text style={styles.groupText}> Nº </Text>
+
+      <View style={fNumero ? styles.focusNumero : styles.groupNumero }>
+        <TextInput
+         value={numero}
+
+    onBlur={() => setFnumero(false)}
+        onFocus={() => setFnumero(true)}
+ placeholder=" "
+          placeholderTextColor="#cccccc"
+                   style={styles.btnView}
+          onChangeText={(numero) => setNumero(numero)}
+        />
+      </View>
+      </View>
+      </View>
 <Text style={styles.inputText}> Email </Text>
 
       <View style={fEmail ? styles.inputFocus : styles.inputView }>
         <TextInput
+         value={email}
+
     onBlur={() => setFemail(false)}
         onFocus={() => setFemail(true)}
  placeholder=" "
@@ -191,6 +342,8 @@ style={styles.scroll}
       <View style={fSenha ? styles.inputFocus : styles.inputView }>
 
         <TextInput
+         value={senha}
+
          onBlur={() => setFsenha(false)}
         onFocus={() => setFsenha(true)}
          placeholder=""
@@ -232,7 +385,7 @@ style={styles.scroll}
 </ScrollView></View>
     </View>
   );
-}
+};
 
 
  
@@ -257,7 +410,7 @@ paddingLeft: 50,
    flexDirection: 'row',
 
    width: '100%',
-   height: '34%',
+   height: '50%',
    paddingLeft: 15
 
   },
@@ -272,18 +425,38 @@ height: '70%',
 borderRadius: 10,
 
   },
-  formHeader: {flexDirection: 'row', marginBottom: 8},
+  formHeader: {
+    flexDirection: 'row',
+     marginBottom: 8,
+    marginTop: 15,
+   borderBottomColor: '#d6ffd9',
+    borderBottomWidth: 3,
+    backgroundColor: '#edfaee',
+    marginTop: -4,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15
+
+  },
 
 
   title: {
     fontSize: 24,
-    color: '#cecece'
+    color: '#bbbbbb',
+      marginLeft: 25,
+
+
   },
 
 inputGroup:{
   flexDirection: 'row',
   justifyContent: 'space-between',
   alignItems: 'space-between'
+
+},
+
+inputGroup2:{
+  flexDirection: 'row',
+
 
 },
  pet: {
@@ -300,13 +473,19 @@ inputGroup:{
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+
+  },
+
+  spin: {
+    fontSize: 42,
   },
   image: {
     resizeMode: 'contain',
     height: 150,
     width: 150,
     marginTop: 25,
-    marginRight: 90
+    marginRight: 90,
+    marginLeft: 90,
 
 },
 
@@ -325,6 +504,7 @@ marginBottom: 5,
 fontWeight: '800',
 fontFamily: 'notoserif',
 
+
 },
 
 groupText: { 
@@ -337,6 +517,16 @@ fontFamily: 'notoserif',
 },
 
 btnGroup: {
+
+  flexDirection: 'column',
+},
+redefinir: {
+  marginLeft: 50,
+  color: '#85D87D',
+  fontSize:12,
+},
+
+btnGroup2: {
 
   flexDirection: 'column',
 },
@@ -374,6 +564,7 @@ manter_conectado: {
   color: '#66666'
 },
 return: {
+  position: 'absolute',
   paddingRight: 50,
   paddingTop: 40,
 
@@ -411,9 +602,74 @@ paddingLeft: 10,
    height: 45,
 
     marginBottom: 20,
- 
+  paddingLeft: 10,
+
     alignItems: "center",
   },
+
+
+
+    groupNumero: {
+    backgroundColor: "#fff",
+    borderRadius: 10,
+      borderWidth: 1,
+    borderColor: "#c1c1c1",
+    width: 70,
+  flexDirection: 'row',
+   height: 45,
+
+    marginBottom: 20,
+  paddingLeft: 10,
+
+    alignItems: "center",
+  },
+
+
+    focusNumero: {
+    backgroundColor: "#fff",
+    borderRadius: 10,
+      borderWidth: 1,
+    borderColor: "#62A0EA",
+    width: 70,
+  flexDirection: 'row',
+   height: 45,
+
+    marginBottom: 20,
+  paddingLeft: 10,
+
+    alignItems: "center",
+  },
+ groupEndereco: {
+    backgroundColor: "#fff",
+    borderRadius: 10,
+      borderWidth: 1,
+    borderColor: "#c1c1c1",
+    width: 230,
+  flexDirection: 'row',
+   height: 45,
+   marginRight: 10,
+    marginBottom: 20,
+  paddingLeft: 10,
+
+    alignItems: "center",
+  },
+
+ focusEndereco: {
+    backgroundColor: "#fff",
+    borderRadius: 10,
+      borderWidth: 1,
+    borderColor: "#62A0EA",
+    width: 230,
+  flexDirection: 'row',
+   height: 45,
+   marginRight: 10,
+    marginBottom: 20,
+  paddingLeft: 10,
+
+    alignItems: "center",
+  },
+
+
   groupFocus: {
     borderRadius: 10,
       borderWidth: 1,
@@ -424,13 +680,20 @@ paddingLeft: 10,
    height: 45,
     marginBottom: 20,
  
+ paddingLeft: 10,
     alignItems: "center",
   },
+
+
+
+
   TextInput: {
     height: 50,
     flex: 1,
-marginRight: 150,
-width: 100
+marginRight: 10,
+width: 250,
+
+
   },
  
   btnView: {
@@ -439,6 +702,10 @@ width: 130,
 marginLeft: 5,
   },
  
+  btnNumero: {
+width: '10%',
+  },
+
   forgot_button: {
     height: 30,
     marginBottom: 30,

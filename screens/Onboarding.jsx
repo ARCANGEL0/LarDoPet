@@ -40,8 +40,9 @@ Achou um cachorro abandonado na rua que precisa de cuidados mas você não tem c
               <View > 
                             <Image style={{width: 150, height: 150, marginHorizontal: 60}}  source={require('../assets/images/3.png')}/>
 
-        <Text style={[styles.header, { marginBottom: 200 }]} >Participe da comunidade!</Text>
+        <Text  onPress={() => {        this.props.navigation.navigate('Login')
 
+      }}style={[styles.header, { marginBottom: 200 }]} >Participe da comunidade!</Text>
         </View>
       </View>
     </Swiper>
