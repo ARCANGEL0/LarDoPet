@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+import firebase from '../utils/firebase.jsx';
 import Axios from 'axios';
 
 import { ActivityIndicator } from 'react-native';
@@ -24,6 +25,8 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 
 export default function Registrar(props) {
+
+  const firebase = firebase.firestore();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
     const [nome, setNome] = useState("");
