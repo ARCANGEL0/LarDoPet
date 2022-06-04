@@ -1,22 +1,30 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   StyleSheet,
   Text,
   View,
   Image,
+  Animated,
   ScrollView,
   TextInput,
   Button,
   TouchableOpacity,
 } from "react-native";
 
-import firebase from '../utils/firebase.jsx';
+
+import FlashMessage from "react-native-flash-message";
+import Signup from '../utils/SignUp.jsx'
+
+
+import app from '../utils/firebase.jsx';
+
 import Axios from 'axios';
 
-import { ActivityIndicator } from 'react-native';
 import { TextInputMask } from 'react-native-masked-text'
 
+
+import Alerta from '../components/Alerta.jsx'
 import CheckBox from 'react-native-check-box'
 import IoIcons from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -26,7 +34,6 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 export default function Registrar(props) {
 
-  const firebase = firebase.firestore();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
     const [nome, setNome] = useState("");
@@ -42,58 +49,167 @@ export default function Registrar(props) {
   const [endereco, setEndereco] = useState("");
   const [numero, setNumero] = useState("");
 
-  const [fEmail, setFemail] = useState(false);
-  const [fSenha, setFsenha] = useState(false);
-  const [fNome, setFnome] = useState(false);
-  const [fTelefone, setFtelefone] = useState(false);
-  const [fBairro, setFbairro] = useState(false);
+  const [fEmail, setFemail] = useState('idle');
+  const [fSenha, setFsenha] = useState('idle');
+  const [fNome, setFnome] = useState('idle');
+  const [fTelefone, setFtelefone] = useState('idle');
+  const [fBairro, setFbairro] = useState('idle');
 
-  const [fCelular, setFcelular] = useState(false);
-  const [fCep, setFcep] = useState(false);
-  const [fEndereco, setFendereco] = useState(false);
-  const [fCidade, setFcidade] = useState(false);
+  const [fCelular, setFcelular] = useState('idle');
+  const [fCep, setFcep] = useState('idle');
+  const [fEndereco, setFendereco] = useState('idle');
+  const [fCidade, setFcidade] = useState('idle');
 
-  const [fNumero, setFnumero] = useState(false);
+  const [fNumero, setFnumero] = useState('idle');
 
   const [senhaVisivel, setSenhaVisivel] = useState(false);
 
   const [isLoading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
 
 
 
 
+  const buscarCep = (cep) => {
+          Axios.get(`https://viacep.com.br/ws/`+cep+`/json/`)
+            .then(response => {
+             
+                    setLoading(true);
+
+       setTimeout(() => {
+         console.log(response.data)
+              setCidade(response.data.localidade)
+              setEndereco(response.data.logradouro)
+              setBairro(response.data.bairro)}, 200);
 
 
+           
 
-  buscarCep = (cep) => {
-    Axios.get(`https://viacep.com.br/ws/`+cep+`/json/`)
-      .then(response => {
-       
-              setLoading(true);
-
- setTimeout(() => {
-   console.log(response.data)
-        setCidade(response.data.localidade)
-        setEndereco(response.data.logradouro)
-        setBairro(response.data.bairro)}, 200);
-
-
-     
-
-        setTimeout(() => {
-        setLoading(false)
-}, 500);
-      })
-      .catch(error => {
-        return console.log(error);
-      })
+              setTimeout(() => {
+              setLoading(false)
+      }, 500);
+            })
+            .catch(error => {
+              return console.log(error);
+            })
   }
+
+const register = () => {
+
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+
+
+    if(email.trim().length == 0){
+                    Alerta('Preencha todos os campos!', 'info', 'danger')
+
+          setFemail('error');
+    }
+    if (senha.trim().length == 0)
+       {
+           Alerta('Preencha todos os campos!', 'info', 'danger')
+
+          setFsenha('error')
+        }
+    if (nome.trim().length == 0){
+
+
+                    Alerta('Preencha todos os campos!', 'info', 'danger')
+
+
+            setFnome('error')
+          }
+    if (telefone.trim().length == 0)
+        {
+           Alerta('Preencha todos os campos!', 'info', 'danger')
+
+            setFtelefone('error')
+          }
+    if (celular.trim().length == 0){
+        Alerta('Preencha todos os campos!', 'info', 'danger')
+
+        setFcelular('error')
+        }
+    if (cep.trim().length == 0)
+        {
+                      Alerta('Preencha todos os campos!', 'info', 'danger')
+
+        setFcep('error')
+        }
+    if (cidade.trim().length == 0)
+        {
+                      Alerta('Preencha todos os campos!', 'info', 'danger')
+
+        setFcidade('error')
+        }
+    if (bairro.trim().length == 0)
+          {
+            Alerta('Preencha todos os campos!', 'info', 'danger')
+
+          setFbairro('error')
+          }
+    if (endereco.trim().length == 0)
+        {
+           Alerta('Preencha todos os campos!', 'info', 'danger')
+
+        setFendereco('error')
+        }
+    if (numero.trim().length == 0)
+        {
+                     Alerta('Preencha todos os campos!', 'info', 'danger')
+
+
+        Alerta('Preencha todos os campos!', 'info', 'danger')
+        setFnumero('error')
+        } 
+    if(reg.test(email) === false){
+
+       
+       Alerta('Email inválido!','info','danger')
+        setFemail('error')
+
+        }
+
+    if(reg.test(email) === true && !numero.trim().length == 0 && !endereco.trim().length == 0 && !bairro.trim().length == 0 && !cidade.trim().length == 0 && !cep.trim().length == 0 && !celular.trim().length == 0 && !telefone.trim().length == 0 && !nome.trim().length == 0 && !email.trim().length == 0) 
+   
+
+    {
+          // REGISTRO 
+
+Signup(props,email,senha)
+
+
+    }
+   
+}
+
+
+const btnState = (estado) => {
+    
+    switch (estado) {
+        case 'idle':
+            return '#c1c1c1';
+
+        case 'focus':
+
+            return '#62A0EA';
+
+        case 'error':
+            return '#ed4250'
+    }
+
+}
+
+
 
 
   return (
     <View style={styles.container}>
 
         <View style={styles.header} >
+
+        
+
+
         <TouchableOpacity style={styles.returnBtn}
 
         onPress={() => {
@@ -132,12 +248,13 @@ style={styles.scroll}
 
  <Text style={styles.inputText}> Nome </Text>
 
-      <View style={fNome ? styles.inputFocus : styles.inputView }>
+      <View style={[styles.inputView, {borderColor: btnState(fNome)}]}
+      >
         <TextInput
          value={nome}
 
-    onBlur={() => setFnome(false)}
-        onFocus={() => setFnome(true)}
+    onBlur={() => setFnome('idle')}
+        onFocus={() => setFnome('focus')}
  placeholder=" "
           placeholderTextColor="#cccccc"
                    style={styles.TextInput}
@@ -151,7 +268,7 @@ style={styles.scroll}
 
  <Text style={styles.inputText}> Telefone </Text>
 
-      <View style={fTelefone ? styles.inputFocus : styles.inputView }>
+      <View style={[styles.inputView, {borderColor: btnState(fTelefone)}]}>
         <TextInputMask
          value={telefone}
          type={'custom'}
@@ -167,8 +284,8 @@ style={styles.scroll}
     mask: '(99) 9999-9999'
   }}
 
-    onBlur={() => setFtelefone(false)}
-        onFocus={() => setFtelefone(true)}
+    onBlur={() => setFtelefone('idle')}
+        onFocus={() => setFtelefone('focus')}
  placeholder=" "
           placeholderTextColor="#cccccc"
                    style={styles.TextInput}
@@ -179,7 +296,7 @@ style={styles.scroll}
 
  <Text style={styles.inputText}> Celular </Text>
 
-      <View style={fCelular ? styles.inputFocus : styles.inputView }>
+      <View style={[styles.inputView, {borderColor: btnState(fCelular)}]}>
         <TextInputMask
          value={celular}
 
@@ -197,8 +314,8 @@ type={'custom'}
   }}
 
 
-    onBlur={() => setFcelular(false)}
-        onFocus={() => setFcelular(true)}
+    onBlur={() => setFcelular('idle')}
+        onFocus={() => setFcelular('focus')}
  placeholder=" "
  value={celular}
           placeholderTextColor="#cccccc"
@@ -213,7 +330,7 @@ type={'custom'}
 <View style={styles.btnGroup}>
  <Text style={styles.groupText}> CEP </Text>
 
-      <View style={fCep ? styles.groupFocus : styles.groupView }>
+      <View style={[styles.groupView, {borderColor: btnState(fCep)}]}>
         <TextInputMask
         type={'custom'}
   options={{
@@ -229,8 +346,8 @@ type={'custom'}
   }}
 
 
-    onBlur={() => setFcep(false)}
-        onFocus={() => setFcep(true)}
+    onBlur={() => setFcep('idle')}
+        onFocus={() => setFcep('focus')}
  placeholder=" "
           placeholderTextColor="#cccccc"
                    style={styles.btnView}
@@ -252,12 +369,12 @@ type={'custom'}
 
  <Text style={styles.groupText}> Cidade </Text>
 
-      <View style={fCidade ? styles.groupFocus : styles.groupView }>
+      <View style={[styles.groupView, {borderColor: btnState(fCidade)}]}>
         <TextInput
          value={cidade}
 
-    onBlur={() => setFcidade(false)}
-        onFocus={() => setFcidade(true)}
+    onBlur={() => setFcidade('idle')}
+        onFocus={() => setFcidade('focus')}
  placeholder=" "
           placeholderTextColor="#cccccc"
                    style={styles.btnView}
@@ -274,12 +391,12 @@ type={'custom'}
 
  <Text style={styles.inputText}> Bairro </Text>
 
-      <View style={fBairro ? styles.inputFocus : styles.inputView }>
+      <View style={[styles.inputView, {borderColor: btnState(fBairro)}]}>
         <TextInput
 
  
-    onBlur={() => setFbairro(false)}
-        onFocus={() => setFbairro(true)}
+    onBlur={() => setFbairro('idle')}
+        onFocus={() => setFbairro('focus')}
  placeholder=" "
  value={bairro}
           placeholderTextColor="#cccccc"
@@ -293,12 +410,12 @@ type={'custom'}
 
                    <Text style={styles.groupText}> Rua </Text>
 
-      <View style={fEndereco ? styles.focusEndereco : styles.groupEndereco }>
+      <View style={[styles.groupEndereco, {borderColor: btnState(fEndereco)}]}>
         <TextInput
          value={endereco}
 
-    onBlur={() => setFendereco(false)}
-        onFocus={() => setFendereco(true)}
+    onBlur={() => setFendereco('idle')}
+        onFocus={() => setFendereco('focus')}
  placeholder=" "
           placeholderTextColor="#cccccc"
                    style={styles.btnView}
@@ -311,12 +428,12 @@ type={'custom'}
 
  <Text style={styles.groupText}> Nº </Text>
 
-      <View style={fNumero ? styles.focusNumero : styles.groupNumero }>
+      <View style={[styles.groupNumero, {borderColor: btnState(fNumero)}]}>
         <TextInput
          value={numero}
 
-    onBlur={() => setFnumero(false)}
-        onFocus={() => setFnumero(true)}
+    onBlur={() => setFnumero('idle')}
+        onFocus={() => setFnumero('focus')}
  placeholder=" "
           placeholderTextColor="#cccccc"
                    style={styles.btnView}
@@ -327,12 +444,12 @@ type={'custom'}
       </View>
 <Text style={styles.inputText}> Email </Text>
 
-      <View style={fEmail ? styles.inputFocus : styles.inputView }>
+      <View style={[styles.inputView, {borderColor: btnState(fEmail)}]}>
         <TextInput
          value={email}
 
-    onBlur={() => setFemail(false)}
-        onFocus={() => setFemail(true)}
+    onBlur={() => setFemail('idle')}
+        onFocus={() => setFemail('focus')}
  placeholder=" "
           placeholderTextColor="#cccccc"
                    style={styles.TextInput}
@@ -342,13 +459,13 @@ type={'custom'}
  
  <Text style={styles.inputText}> Senha </Text>
 
-      <View style={fSenha ? styles.inputFocus : styles.inputView }>
+      <View style={[styles.inputView, {borderColor: btnState(fSenha)}]}>
 
         <TextInput
          value={senha}
 
-         onBlur={() => setFsenha(false)}
-        onFocus={() => setFsenha(true)}
+         onBlur={() => setFsenha('idle')}
+        onFocus={() => setFsenha('focus')}
          placeholder=""
           placeholderTextColor="#cccccc"
           secureTextEntry={!senhaVisivel}
@@ -376,16 +493,31 @@ type={'custom'}
       </View>
 
       <View style={styles.btn}>
-  <TouchableOpacity style={styles.register}>
+  <TouchableOpacity 
+
+onPress={() => {
+
+register()
+
+}}
+  style={styles.register}>
                     <FontIcon   style={styles.icon} name="user-plus" size={18} color="#53bd57" />
 
-        <Text style={styles.loginText}>Criar conta</Text>
+        <Text style={styles.loginText}>Registrar</Text>
       </TouchableOpacity>
+
 
 
 </View>
 
 </ScrollView></View>
+
+      <FlashMessage position="top"    
+duration={2300}
+              style={styles.alert}
+              titleStyle={styles.alertText}
+      /> 
+
     </View>
   );
 };
@@ -437,6 +569,8 @@ borderRadius: 10,
     backgroundColor: '#edfaee',
     marginTop: -4,
     borderTopLeftRadius: 15,
+    paddingBottom: 8,
+    paddingTop: 5,
     borderTopRightRadius: 15
 
   },
@@ -753,5 +887,14 @@ width: '10%',
         color: '#fff',
         marginRight: 30,
 
+  },
+  alert:{
+paddingTop: 30,
+paddingBottom:20,
+  },
+  alertText: {
+    fontSize: 18,
+    marginTop: 2,
   }
+
 });
