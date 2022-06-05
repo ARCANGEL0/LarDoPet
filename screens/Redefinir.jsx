@@ -13,52 +13,51 @@ import {
 
 import Axios from 'axios';
 
-import { ActivityIndicator } from 'react-native';
-import { TextInputMask } from 'react-native-masked-text'
-
-import CheckBox from 'react-native-check-box'
+import Recuperar from '../utils/Recuperar.jsx';
+import Alerta from '../components/Alerta.jsx'
+import btnState from '../components/btnState.jsx'
 import IoIcons from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
-import Spinner from 'react-native-loading-spinner-overlay';
 
 
 export default function Redefinir(props) {
 
-  const [isLoading, setLoading] = useState(false);
   const [email, setEmail] = useState(''); 
-   const [fEmail, setFemail] = useState(false);
+   const [fEmail, setFemail] = useState('idle');
 
 
 
+const redfAction = () => {
+
+      let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 
 
+if (email.trim().length == 0)
+        {
 
 
+        Alerta('Preencha o email!', 'info', 'danger')
+        setFemail('error')
+        } 
+if(reg.test(email) === false){
 
-  buscarCep = (cep) => {
-    Axios.get(`https://viacep.com.br/ws/`+cep+`/json/`)
-      .then(response => {
        
-              setLoading(true);
+       Alerta('Email inválido!','info','danger')
+        setFemail('error')
 
- setTimeout(() => {
-   console.log(response.data)
-        setCidade(response.data.localidade)
-        setEndereco(response.data.logradouro)
-        setBairro(response.data.bairro)}, 200);
+        }
+
+if(reg.test(email) === true && !email.trim().length == 0) 
+
+    {
+           Recuperar(email)
 
 
-     
 
-        setTimeout(() => {
-        setLoading(false)
-}, 500);
-      })
-      .catch(error => {
-        return console.log(error);
-      })
-  }
+
+    }
+}
 
 
   return (
@@ -79,14 +78,7 @@ export default function Redefinir(props) {
 
       <View style={styles.body}>
 
-{ isLoading ?
-<Spinner
-          visible={true}
-          textStyle={styles.spinnerTextStyle}
-        />
 
-        : null
-}
  <View style={styles.formHeader}>
       <Text style={styles.title}> Redefinir a senha </Text>
 
@@ -104,12 +96,12 @@ style={styles.scroll}
 <View style={styles.btnGroup}>
  <Text style={styles.inputText}> Digite seu e-mail </Text>
 
-      <View style={fEmail ? styles.inputFocus : styles.inputView }>
+      <View style={[styles.inputView, {borderColor: btnState(fEmail)}]}>
         <TextInput
          value={email}
 
-    onBlur={() => setFemail(false)}
-        onFocus={() => setFemail(true)}
+    onBlur={() => setFemail('idle')}
+        onFocus={() => setFemail('focus')}
  placeholder=" "
           placeholderTextColor="#cccccc"
                    style={styles.TextInput}
@@ -124,7 +116,7 @@ style={styles.scroll}
 
 
       <View style={styles.btn}>
-  <TouchableOpacity style={styles.btnC}>
+  <TouchableOpacity onPress={() => redfAction()} style={styles.btnC}>
                     <FontIcon   style={styles.icon} name="key" size={18} color="#53bd57" />
 
         <Text style={styles.loginText}>Recuperar senha </Text>
@@ -193,18 +185,7 @@ borderRadius: 10,
 
   },
 
-inputGroup:{
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'space-between'
 
-},
-
-inputGroup2:{
-  flexDirection: 'row',
-
-
-},
  pet: {
   marginTop: 7.6,
  },
@@ -250,35 +231,6 @@ fontFamily: 'notoserif',
 },
 
 
-
- inputFocus: {
-  flexDirection: 'row',
-      borderColor: "#62A0EA",
-         backgroundColor: "#fff",
-    borderRadius: 10,
-      borderWidth: 1.5,
-    width: "100%",
-paddingLeft: 10,
-
-   height: 45,
-    marginBottom: 20,
- 
-    alignItems: "center",
-
- },
-
-opcoes : {
-flexDirection:"row",
-justifyContent:'space-between',
-
-
-},
-
-manter_conectado: {
-  fontSize: 12,
-  marginLeft: 5,
-  color: '#66666'
-},
 return: {
   position: 'absolute',
   paddingRight: 50,
@@ -310,97 +262,8 @@ paddingLeft: 10,
     alignItems: "center",
   },
 
-    groupView: {
-    backgroundColor: "#fff",
-    borderRadius: 10,
-      borderWidth: 1,
-    borderColor: "#c1c1c1",
-    width: 142,
-  flexDirection: 'row',
-   height: 45,
-
-    marginBottom: 20,
-  paddingLeft: 10,
-
-    alignItems: "center",
-  },
 
 
-
-    groupNumero: {
-    backgroundColor: "#fff",
-    borderRadius: 10,
-      borderWidth: 1,
-    borderColor: "#c1c1c1",
-    width: 70,
-  flexDirection: 'row',
-   height: 45,
-
-    marginBottom: 20,
-  paddingLeft: 10,
-
-    alignItems: "center",
-  },
-
-
-    focusNumero: {
-    backgroundColor: "#fff",
-    borderRadius: 10,
-      borderWidth: 1,
-    borderColor: "#62A0EA",
-    width: 70,
-  flexDirection: 'row',
-   height: 45,
-
-    marginBottom: 20,
-  paddingLeft: 10,
-
-    alignItems: "center",
-  },
- groupEndereco: {
-    backgroundColor: "#fff",
-    borderRadius: 10,
-      borderWidth: 1,
-    borderColor: "#c1c1c1",
-    width: 230,
-  flexDirection: 'row',
-   height: 45,
-   marginRight: 10,
-    marginBottom: 20,
-  paddingLeft: 10,
-
-    alignItems: "center",
-  },
-
- focusEndereco: {
-    backgroundColor: "#fff",
-    borderRadius: 10,
-      borderWidth: 1,
-    borderColor: "#62A0EA",
-    width: 230,
-  flexDirection: 'row',
-   height: 45,
-   marginRight: 10,
-    marginBottom: 20,
-  paddingLeft: 10,
-
-    alignItems: "center",
-  },
-
-
-  groupFocus: {
-    borderRadius: 10,
-      borderWidth: 1,
-   borderColor: "#62A0EA",
-         backgroundColor: "#fff",
-    width: 142,
-  flexDirection: 'row',
-   height: 45,
-    marginBottom: 20,
- 
- paddingLeft: 10,
-    alignItems: "center",
-  },
 
 
 

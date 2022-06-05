@@ -5,6 +5,8 @@ import Onboarding from './screens/Onboarding.jsx'
 import Login from './screens/Login.jsx';
 import Registrar from './screens/Registrar.jsx'
 import Redefinir from './screens/Redefinir.jsx'
+import Home from './screens/Home.jsx';
+import FlashMessage from "react-native-flash-message";
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -14,7 +16,58 @@ const Stack = createNativeStackNavigator();
 export default function App() {
 
 const [primeiraVez, setPrimeiraVez] = useState(true)
+const [logado, setLogado] = useState(false);
 
+
+
+
+
+const checkLogin = () => {
+
+if(logado) {
+        return(
+                  <>
+             <Stack.Screen 
+                    options={{headerShown: false}}
+
+                    name="Home" component={Home} />
+                  </>
+          );
+}
+else {
+    return (
+          <>
+     <Stack.Screen 
+
+                   options={{headerShown: false}}
+
+                
+
+                 name="Login" 
+
+                >
+                 {(props) => (
+                    <Login setLogin={setLogado} {...props}/>
+               )}
+                 </Stack.Screen>
+
+
+
+            <Stack.Screen 
+
+                   options={{headerShown: false}}
+
+                 name="Registrar" component={Registrar} />
+
+                 <Stack.Screen 
+
+                   options={{headerShown: false}}
+
+                 name="Redefinir" component={Redefinir} />
+            </>
+          );
+      }
+}
 
   useEffect(() => {
         checkInicio().then((checkInicio) => {
@@ -42,28 +95,21 @@ const [primeiraVez, setPrimeiraVez] = useState(true)
 
 null
       }
-  <Stack.Screen 
 
-               options={{headerShown: false}}
+     
 
-             name="Login" component={Login} />
-
-        <Stack.Screen 
-
-               options={{headerShown: false}}
-
-             name="Registrar" component={Registrar} />
-
-             <Stack.Screen 
-
-               options={{headerShown: false}}
-
-             name="Redefinir" component={Redefinir} />
-
+{checkLogin()}
       
            
 
       </Stack.Navigator>
+      <FlashMessage 
+      position="top"    
+duration={2300}
+hideStatusBar={false}
+              style={styles.alert}
+              titleStyle={styles.alertText}
+      /> 
     </NavigationContainer>
   );
 }
@@ -75,4 +121,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  alert:{
+paddingTop: 30,
+paddingBottom:20,
+  },
+  alertText: {
+    fontSize: 18,
+    marginTop: 2,
+  }
+
 });

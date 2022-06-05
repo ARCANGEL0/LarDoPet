@@ -12,19 +12,55 @@ import {
 
 import CheckBox from 'react-native-check-box'
 
-
+import SignIn from '../utils/SignIn.jsx';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
+import Alerta from '../components/Alerta.jsx'
+import btnState from '../components/btnState.jsx'
 
-
-export default function Login(props) {
+export default function Login(props, {setLogin}) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [Focus1, setFocus1] = useState(false);
-  const [Focus2, setFocus2] = useState(false);
+  const [Focus1, setFocus1] = useState('idle');
+  const [Focus2, setFocus2] = useState('idle');
   const [senhaVisivel, setSenhaVisivel] = useState(false);
-  const [isSelected, setSelection] = useState(false);
+  const [manterConectado, setManterConectado] = useState(false);
 
+
+
+const signIn = () => {
+
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+
+  if (email.trim().length == 0)
+           {
+
+
+           Alerta('Preencha todos os campos!', 'info', 'danger')
+           setFocus1('error')
+           } 
+   else if(reg.test(email) === false){
+
+         
+           Alerta('Email inválido!','info','danger')
+           setFocus1('error')
+
+           }
+
+   if (senha.trim().length == 0)
+           {
+
+
+           Alerta('Preencha todos os campos!', 'info', 'danger')
+           setFocus2('error')
+           } 
+
+   if(reg.test(email) === true && !email.trim().length == 0 && !senha.trim().length == 0) 
+   { 
+       SignIn(props,email, senha)
+    }
+      
+}
   return (
     <View style={styles.container}>
 
@@ -33,10 +69,10 @@ export default function Login(props) {
       <StatusBar style="auto" />
                    <Text style={styles.inputText}> Email </Text>
 
-      <View style={Focus1 ? styles.inputFocus : styles.inputView }>
+      <View style={[styles.inputView, {borderColor: btnState(Focus1)}]}>
         <TextInput
-    onBlur={() => setFocus1(false)}
-        onFocus={() => setFocus1(true)}
+    onBlur={() => setFocus1('idle')}
+        onFocus={() => setFocus1('focus')}
  placeholder="exemplo@gmail.com"
           placeholderTextColor="#cccccc"
                    style={styles.TextInput}
@@ -46,11 +82,11 @@ export default function Login(props) {
 
                   <Text style={styles.inputText}> Senha </Text>
  
-      <View style={Focus2 ? styles.inputFocus : styles.inputView }>
+      <View style={[styles.inputView, {borderColor: btnState(Focus2)}]}>
 
         <TextInput
-         onBlur={() => setFocus2(false)}
-        onFocus={() => setFocus2(true)}
+         onBlur={() => setFocus2('idle')}
+        onFocus={() => setFocus2('focus')}
          placeholder="********"
           placeholderTextColor="#cccccc"
           secureTextEntry={!senhaVisivel}
@@ -80,9 +116,9 @@ checkedCheckBoxColor="#8eed92"
 uncheckedCheckBoxColor="#cecece"
 style={{marginLeft:10, marginTop: -3}}
     onClick={()=>{
-      setSelection(!isSelected)
+      setManterConectado(!manterConectado)
     }}
-    isChecked={isSelected}
+    isChecked={manterConectado}
 />
         <Text style={styles.manter_conectado}>Me manter conectado</Text>
 
@@ -97,7 +133,9 @@ onPress={() => {
 
       </View>
  
-      <TouchableOpacity style={styles.loginBtn}>
+      <TouchableOpacity
+        onPress={() => {signIn()}}
+       style={styles.loginBtn}>
                     <MaterialIcon   style={styles.icon} name="login" size={18} color="#53bd57" />
 
         <Text style={styles.loginText}>LOGIN</Text>
@@ -161,21 +199,7 @@ redefinir: {
   color: '#85D87D',
   fontSize:12,
 },
- inputFocus: {
-  flexDirection: 'row',
-      borderColor: "#62A0EA",
-         backgroundColor: "#fff",
-    borderRadius: 10,
-      borderWidth: 1.5,
-    width: "85%",
-paddingLeft: 10,
 
-   height: 45,
-    marginBottom: 20,
- 
-    alignItems: "center",
-
- },
 
 opcoes : {
 flexDirection:"row",
@@ -214,7 +238,6 @@ paddingLeft: 10,
   TextInput: {
     height: 50,
     flex: 1,
-marginRight: 150,
 width: 100
   },
  

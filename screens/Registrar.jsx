@@ -13,10 +13,10 @@ import {
 } from "react-native";
 
 
-import FlashMessage from "react-native-flash-message";
 import Signup from '../utils/SignUp.jsx'
+import Alerta from '../components/Alerta.jsx'
 
-
+import btnState from '../components/btnState.jsx'
 import app from '../utils/firebase.jsx';
 
 import Axios from 'axios';
@@ -24,7 +24,6 @@ import Axios from 'axios';
 import { TextInputMask } from 'react-native-masked-text'
 
 
-import Alerta from '../components/Alerta.jsx'
 import CheckBox from 'react-native-check-box'
 import IoIcons from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -183,21 +182,6 @@ Signup(props,email,senha)
 }
 
 
-const btnState = (estado) => {
-    
-    switch (estado) {
-        case 'idle':
-            return '#c1c1c1';
-
-        case 'focus':
-
-            return '#62A0EA';
-
-        case 'error':
-            return '#ed4250'
-    }
-
-}
 
 
 
@@ -429,7 +413,19 @@ type={'custom'}
  <Text style={styles.groupText}> Nº </Text>
 
       <View style={[styles.groupNumero, {borderColor: btnState(fNumero)}]}>
-        <TextInput
+         <TextInputMask
+        type={'custom'}
+  options={{
+    /**
+     * mask: (String | required | default '')
+     * the mask pattern
+     * 9 - accept digit.
+     * A - accept alpha.
+     * S - accept alphanumeric.
+     * * - accept all, EXCEPT white space.
+    */
+    mask: '9999999999'
+  }}
          value={numero}
 
     onBlur={() => setFnumero('idle')}
@@ -512,11 +508,7 @@ register()
 
 </ScrollView></View>
 
-      <FlashMessage position="top"    
-duration={2300}
-              style={styles.alert}
-              titleStyle={styles.alertText}
-      /> 
+      
 
     </View>
   );
@@ -887,14 +879,5 @@ width: '10%',
         color: '#fff',
         marginRight: 30,
 
-  },
-  alert:{
-paddingTop: 30,
-paddingBottom:20,
-  },
-  alertText: {
-    fontSize: 18,
-    marginTop: 2,
   }
-
 });
