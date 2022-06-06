@@ -62,7 +62,7 @@ else {
 
                 >
                  {(props) => (
-                    <Login  setLoading={setLoading} setData={setData} setUsuario={setUsuario}{...props}/>
+                    <Login  setManterLogado={setManterLogado} manterLogado={manterLogado} setLoading={setLoading} setData={setData} setUsuario={setUsuario}{...props}/>
                )}
                  </Stack.Screen>
 
