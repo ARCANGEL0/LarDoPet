@@ -6,7 +6,7 @@ function CheckLogado() {
   AsyncStorage.setItem(LOGADO, 'false');
 }
 
-export default async function CheckLogado() {
+export default async function checkLogado() {
   try {
     const manterConectado = await AsyncStorage.getItem(LOGADO);
     if (manterConectado === null) {

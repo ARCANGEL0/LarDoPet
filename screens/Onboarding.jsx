@@ -7,7 +7,6 @@ import {
   Image,
 } from 'react-native';
 
-import Button from '../components/Button.jsx';
 import Swiper from '../components/Swiper.jsx';
 
 

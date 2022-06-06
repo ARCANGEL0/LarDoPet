@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View, AsyncStorage} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import Onboarding from './screens/Onboarding.jsx'
 import Login from './screens/Login.jsx';
@@ -17,20 +17,29 @@ export default function App() {
 
 const [primeiraVez, setPrimeiraVez] = useState(true)
 const [logado, setLogado] = useState(false);
+const [manterLogado, setManterLogado] = useState(false);
+const [usuario, setUsuario] = useState('');
 
 
 
+const Logout = async () => {
+ dataUsuario('')
+}
 
 
 const checkLogin = () => {
 
-if(logado) {
+if(usuario) {
         return(
                   <>
              <Stack.Screen 
                     options={{headerShown: false}}
 
-                    name="Home" component={Home} />
+                    name="Home"  >
+                       {(props) => (
+                    <Home Logout={Logout} setData={setData} setUsuario={setUsuario} manterLogado={manterLogado} setManterLogado={setManterLogado} setLogin={setLogado} {...props}/>
+               )}
+                    </Stack.Screen>
                   </>
           );
 }
@@ -47,7 +56,7 @@ else {
 
                 >
                  {(props) => (
-                    <Login setLogin={setLogado} {...props}/>
+                    <Login setData={setData} setUsuario={setUsuario} manterLogado={manterLogado} setManterLogado={setManterLogado} setLogin={setLogado} {...props}/>
                )}
                  </Stack.Screen>
 
@@ -69,11 +78,42 @@ else {
       }
 }
 
+
+const setData = async (data) => {
+
+await AsyncStorage.setItem('usuario',JSON.stringify(data.user));
+dataUsuario(data.user)
+console.log("DADOS VINDOS DO SIGNIN:    ")
+console.log(data.user)
+}
+
+
+const dataUsuario = (info) => {
+  setUsuario(info)
+} 
+
+
+
+const getData = async () => {
+  try {
+   const userData = await AsyncStorage.getItem('usuario')
+        dataUsuario(userData)
+        console.log("LOG DO GET DATA:   " + userData)
+    
+  
+  } catch(e) {
+      console.log("ERRO DO GET DATA:    " + e)
+  }
+}
+
+
   useEffect(() => {
+getData();
         checkInicio().then((checkInicio) => {
             setPrimeiraVez(checkInicio)
         });
-        console.log(primeiraVez);
+
+       
     }, [])
 
 

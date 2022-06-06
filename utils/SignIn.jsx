@@ -2,6 +2,7 @@ import {
     getAuth,
     signInWithEmailAndPassword,
 } from "firebase/auth";
+import {  AsyncStorage} from 'react-native';
 
 import Alerta from '../components/Alerta.jsx'
 import firebase from '../utils/firebase.jsx'
@@ -25,20 +26,31 @@ const SignIn =  (props,email,senha) =>{
            }
             
 
+
         const auth = getAuth();
             signInWithEmailAndPassword(auth, email, senha)
-            .then(() => {
+            .then((response) => {
              
-            
+              if(props.manterLogado) {
+                  alert(' persistencia')
+
+                }
+                else {
+                  alert('login sem persistencia')
+                }
                setTimeout(() => {
-                props.setLogin(true)},
-              800);
+
+                 props.setData(response);
+                 props.navigation.navigate('Home');
+}
+                 ,
+               800);
 
             })
             .catch((error) => {
                 Alerta(getMsgByError(error.code), 'warning', 'danger');
 
-                console.log("Erro: " + email)
+                console.log("Erro: " + error)
             });
 
 

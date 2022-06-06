@@ -1,5 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
+       import { AsyncStorage } from 'react-native';
+
 import {
   StyleSheet,
   Text,
@@ -18,13 +20,14 @@ import FontIcon from 'react-native-vector-icons/FontAwesome';
 import Alerta from '../components/Alerta.jsx'
 import btnState from '../components/btnState.jsx'
 
-export default function Login(props, {setLogin}) {
+export default function Login(props, {setLogin,setUsuario, setData}) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [Focus1, setFocus1] = useState('idle');
   const [Focus2, setFocus2] = useState('idle');
   const [senhaVisivel, setSenhaVisivel] = useState(false);
-  const [manterConectado, setManterConectado] = useState(false);
+
+
 
 
 
@@ -57,6 +60,9 @@ const signIn = () => {
 
    if(reg.test(email) === true && !email.trim().length == 0 && !senha.trim().length == 0) 
    { 
+
+
+
        SignIn(props,email, senha)
     }
       
@@ -116,9 +122,9 @@ checkedCheckBoxColor="#8eed92"
 uncheckedCheckBoxColor="#cecece"
 style={{marginLeft:10, marginTop: -3}}
     onClick={()=>{
-      setManterConectado(!manterConectado)
+      props.setManterLogado(!props.manterLogado)
     }}
-    isChecked={manterConectado}
+    isChecked={props.manterLogado}
 />
         <Text style={styles.manter_conectado}>Me manter conectado</Text>
 
