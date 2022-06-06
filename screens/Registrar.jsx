@@ -28,7 +28,6 @@ import CheckBox from 'react-native-check-box'
 import IoIcons from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
-import Spinner from 'react-native-loading-spinner-overlay';
 
 
 export default function Registrar(props) {
@@ -63,7 +62,6 @@ export default function Registrar(props) {
 
   const [senhaVisivel, setSenhaVisivel] = useState(false);
 
-  const [isLoading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
 
@@ -73,7 +71,7 @@ export default function Registrar(props) {
           Axios.get(`https://viacep.com.br/ws/`+cep+`/json/`)
             .then(response => {
              
-                    setLoading(true);
+                    props.setLoading(true);
 
        setTimeout(() => {
          console.log(response.data)
@@ -85,7 +83,7 @@ export default function Registrar(props) {
            
 
               setTimeout(() => {
-              setLoading(false)
+              props.setLoading(false)
       }, 500);
             })
             .catch(error => {
@@ -208,14 +206,7 @@ Signup(props,email,senha)
 
       <View style={styles.body}>
 
-{ isLoading ?
-<Spinner
-          visible={true}
-          textStyle={styles.spinnerTextStyle}
-        />
 
-        : null
-}
  <View style={styles.formHeader}>
       <Text style={styles.title}> Criar conta </Text>
 
@@ -337,7 +328,6 @@ type={'custom'}
                    style={styles.btnView}
           onChangeText={(cepd) => 
             {
-              console.log(isLoading);
             buscarCep(cepd);
            setCep(cepd);
          }

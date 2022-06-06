@@ -18,6 +18,7 @@ const auth = getAuth();
 signOut(auth).then(() => {
 
 
+             props.setLoading(true);
 
 
 
@@ -27,10 +28,12 @@ signOut(auth).then(() => {
  setTimeout(() => {
 
                props.Logout();
+               props.setLoading(false);
+
                 //  props.naviation.navigate('Login');
 }
                  ,
-               800);
+               300);
 
 
 }).catch((error) => {

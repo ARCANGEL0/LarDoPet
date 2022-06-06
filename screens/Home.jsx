@@ -4,7 +4,7 @@ import SignOut from '../utils/SignOut.jsx';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-const Home = (props, {setLogin,setUsuario, setData, Logout}) => {
+const Home = (props, {setLogin,setUsuario, setData, Logout, setLoading}) => {
   return (
     <SafeAreaView
       style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>

@@ -30,21 +30,16 @@ const SignIn =  (props,email,senha) =>{
         const auth = getAuth();
             signInWithEmailAndPassword(auth, email, senha)
             .then((response) => {
-             
-              if(props.manterLogado) {
-                  alert(' persistencia')
-
-                }
-                else {
-                  alert('login sem persistencia')
-                }
+             props.setLoading(true);
+         
                setTimeout(() => {
 
                  props.setData(response);
-                 props.navigation.navigate('Home');
+                 props.setLoading(false);
+
 }
                  ,
-               800);
+               400);
 
             })
             .catch((error) => {

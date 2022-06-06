@@ -20,7 +20,7 @@ import FontIcon from 'react-native-vector-icons/FontAwesome';
 import Alerta from '../components/Alerta.jsx'
 import btnState from '../components/btnState.jsx'
 
-export default function Login(props, {setLogin,setUsuario, setData}) {
+export default function Login(props, {setLogin,setUsuario, setData, setLoading}) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [Focus1, setFocus1] = useState('idle');

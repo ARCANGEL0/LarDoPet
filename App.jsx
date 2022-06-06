@@ -7,6 +7,7 @@ import Registrar from './screens/Registrar.jsx'
 import Redefinir from './screens/Redefinir.jsx'
 import Home from './screens/Home.jsx';
 import FlashMessage from "react-native-flash-message";
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -19,12 +20,16 @@ const [primeiraVez, setPrimeiraVez] = useState(true)
 const [logado, setLogado] = useState(false);
 const [manterLogado, setManterLogado] = useState(false);
 const [usuario, setUsuario] = useState('');
+  const [isLoading, setLoading] = useState(false);
 
 
 
 const Logout = async () => {
- dataUsuario('')
- alert(usuario)
+
+
+await AsyncStorage.setItem('usuario','');
+dataUsuario('')
+
 }
 
 
@@ -38,7 +43,7 @@ if(usuario) {
 
                     name="Home"  >
                        {(props) => (
-                    <Home Logout={Logout} setData={setData} setUsuario={setUsuario} manterLogado={manterLogado} setManterLogado={setManterLogado} setLogin={setLogado} {...props}/>
+                    <Home Logout={Logout}  setLoading={setLoading} setData={setData} setUsuario={setUsuario} manterLogado={manterLogado} setManterLogado={setManterLogado} setLogin={setLogado} {...props}/>
                )}
                     </Stack.Screen>
                   </>
@@ -57,7 +62,7 @@ else {
 
                 >
                  {(props) => (
-                    <Login setData={setData} setUsuario={setUsuario} manterLogado={manterLogado} setManterLogado={setManterLogado} setLogin={setLogado} {...props}/>
+                    <Login  setLoading={setLoading} setData={setData} setUsuario={setUsuario}{...props}/>
                )}
                  </Stack.Screen>
 
@@ -67,7 +72,15 @@ else {
 
                    options={{headerShown: false}}
 
-                 name="Registrar" component={Registrar} />
+                 name="Registrar"
+            >
+            
+                 {(props) => (
+                                <Registrar setLoading={setLoading} setData={setData} setUsuario={setUsuario} anterLogado={setManterLogado} setLogin={setLogado} {...props}/>
+               )}
+
+
+            </Stack.Screen>
 
                  <Stack.Screen 
 
@@ -81,11 +94,12 @@ else {
 
 
 const setData = async (data) => {
-
+if(manterLogado){
 await AsyncStorage.setItem('usuario',JSON.stringify(data.user));
+
+}
 dataUsuario(data.user)
-console.log("DADOS VINDOS DO SIGNIN:    ")
-console.log(data.user)
+
 }
 
 
@@ -99,7 +113,6 @@ const getData = async () => {
   try {
    const userData = await AsyncStorage.getItem('usuario')
         dataUsuario(userData)
-        console.log("LOG DO GET DATA:   " + userData)
     
   
   } catch(e) {
@@ -144,6 +157,16 @@ null
            
 
       </Stack.Navigator>
+
+      { isLoading ?
+<Spinner
+          visible={true}
+          textStyle={styles.spinnerTextStyle}
+        />
+
+        : null
+}
+
       <FlashMessage 
       position="top"    
 duration={2300}
