@@ -24,6 +24,7 @@ const [usuario, setUsuario] = useState('');
 
 const Logout = async () => {
  dataUsuario('')
+ alert(usuario)
 }
 
 

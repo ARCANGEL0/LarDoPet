@@ -27,7 +27,7 @@ signOut(auth).then(() => {
  setTimeout(() => {
 
                props.Logout();
-                 props.navigation.navigate('Login');
+                //  props.naviation.navigate('Login');
 }
                  ,
                800);
