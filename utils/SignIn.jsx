@@ -36,6 +36,7 @@ const SignIn =  (props,email,senha) =>{
 
                  props.setData(response);
                  props.setLoading(false);
+                 props.navigation.navigate('Home')
 
 }
                  ,
