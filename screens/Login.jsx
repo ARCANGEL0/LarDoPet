@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
        import { AsyncStorage } from 'react-native';
 
 import {
@@ -12,6 +12,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+
+ import * as Facebook from 'expo-facebook'
+
+
+
+
+
 import CheckBox from 'react-native-check-box'
 
 import SignIn from '../utils/SignIn.jsx';
@@ -19,7 +26,6 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 import Alerta from '../components/Alerta.jsx'
 import btnState from '../components/btnState.jsx'
-
 export default function Login(props, {setLogin,setUsuario, setData, setLoading}) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -29,6 +35,45 @@ export default function Login(props, {setLogin,setUsuario, setData, setLoading})
 
 
 
+
+const signInFacebook = async () => {
+  
+
+
+ try {
+
+   await Facebook.initializeAsync({
+        appId: '1002888747050006',
+      });
+
+      const {
+        type,
+        token,
+        expires,
+        permissions,
+        declinedPermissions,
+      } = await Facebook.logInWithReadPermissionsAsync({
+        permissions: ['public_profile', 'email'],
+      });
+            console.log(token);
+
+      if (type === 'success') {
+        // Get the user's name using Facebook's Graph API
+        fetch(`https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture.height(500)`)
+          .then(response => response.json())
+          .then(data => {
+              alert(data)
+          })
+          .catch(e => console.log(e))
+      } else {
+        // type === 'cancel'
+      }
+    } catch ({ message }) {
+      alert(`Facebook Login Error: ${message}`);
+    }
+
+
+  }
 
 
 const signIn = () => {
@@ -82,7 +127,7 @@ const signIn = () => {
  placeholder="exemplo@gmail.com"
           placeholderTextColor="#cccccc"
                    style={styles.TextInput}
-          onChangeText={(email) => setEmail(email)}
+          onChangeText={(email) => setEmail(email.trimEnd())}
         />
       </View>
 
@@ -147,7 +192,11 @@ onPress={() => {
         <Text style={styles.loginText}>LOGIN</Text>
       </TouchableOpacity>
 
-       <TouchableOpacity style={styles.loginFace}>
+       <TouchableOpacity 
+       onPress={() => {
+        signInFacebook()
+       }}
+       style={styles.loginFace}>
               <FontIcon  style={styles.icon} name="facebook" size={18} color="#2f4f91" />
 
         <Text style={styles.loginText}>ENTRAR COM FACEBOOK</Text>

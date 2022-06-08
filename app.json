@@ -15,6 +15,14 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
+    "plugins": [
+      [
+        "expo-facebook",
+        {
+          "userTrackingPermission": false
+        }
+      ]
+    ],
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -29,6 +37,15 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+
+    "facebookScheme": "fb1002888747050006",
+    "facebookDisplayName": "Lar do Pet",
+    "facebookAppId": "1002888747050006",
+    "platforms": [
+    "ios",
+    "android"
+        ],
+
   }
 }
