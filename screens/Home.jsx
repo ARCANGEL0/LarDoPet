@@ -8,10 +8,7 @@ const Home = (props, {setLogin,setUsuario, setData, Logout, setLoading}) => {
   return (
     <SafeAreaView
       style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>
-      	
-      	{console.log(props.usuario.uid)}
-      </Text>
+      <Text>logado</Text>
 
       <TouchableOpacity
         onPress={() => {

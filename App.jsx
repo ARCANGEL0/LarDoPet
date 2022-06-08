@@ -43,7 +43,7 @@ if(usuario) {
 
                     name="Home"  >
                        {(props) => (
-                    <Home Logout={Logout} usuario={usuario}  setLoading={setLoading} setData={setData} setUsuario={setUsuario} manterLogado={manterLogado} setManterLogado={setManterLogado} setLogin={setLogado} {...props}/>
+                    <Home Logout={Logout}  setLoading={setLoading} setData={setData} setUsuario={setUsuario} manterLogado={manterLogado} setManterLogado={setManterLogado} setLogin={setLogado} {...props}/>
                )}
                     </Stack.Screen>
                   </>
