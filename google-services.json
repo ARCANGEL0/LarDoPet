@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "393628598478",
+    "firebase_url": "https://lardopet-c290c-default-rtdb.firebaseio.com",
+    "project_id": "lardopet-c290c",
+    "storage_bucket": "lardopet-c290c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393628598478:android:25d4008909fe539df3109f",
+        "android_client_info": {
+          "package_name": "com.package.lardopet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "393628598478-9ss3opkc0l5k2l942bi433aube10ps8e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.package.lardopet",
+            "certificate_hash": "bcce51c6ee467669f4c3eaee93d58697ccac8535"
+          }
+        },
+        {
+          "client_id": "393628598478-knu5mksa5a2cer9c425ljerh8aq3cobj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrXjy7m7MU-n6OoGr-vNB21ugpe_RXVJo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "393628598478-knu5mksa5a2cer9c425ljerh8aq3cobj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "393628598478-jd0m0nt45smenfb0emotlnei9jbh4n22.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.package.lardopet"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

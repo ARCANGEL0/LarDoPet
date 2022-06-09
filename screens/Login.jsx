@@ -16,6 +16,7 @@ import {
  import * as Facebook from 'expo-facebook'
 
 
+import * as GoogleSignIn from 'expo-google-sign-in';
 
 
 
@@ -36,41 +37,45 @@ export default function Login(props, {setLogin,setUsuario, setData, setLoading})
 
 
 
+
+const signGoogle = async () => {
+
+try {
+      await GoogleSignIn.askForPlayServicesAsync();
+      const { type, user } = await GoogleSignIn.signInAsync();
+      if (type === 'success') {
+        const user = await GoogleSignIn.signInSilentlyAsync();
+        alert(user)
+        alert('tst')
+      }
+    } catch ({ message }) {
+      alert('login: Error:' + message);
+    }
+
+}
+
 const signInFacebook = async () => {
   
 
-
- try {
-
-   await Facebook.initializeAsync({
+   try {
+      await Facebook.initializeAsync({
         appId: '1002888747050006',
       });
-
-      const {
-        type,
-        token,
-        expires,
-        permissions,
-        declinedPermissions,
-      } = await Facebook.logInWithReadPermissionsAsync({
-        permissions: ['public_profile', 'email'],
-      });
-            console.log(token);
-
+      const { type, token, expirationDate, permissions, declinedPermissions } =
+        await Facebook.logInWithReadPermissionsAsync({
+          permissions: ['public_profile'],
+        });
       if (type === 'success') {
         // Get the user's name using Facebook's Graph API
-        fetch(`https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture.height(500)`)
-          .then(response => response.json())
-          .then(data => {
-              alert(data)
-          })
-          .catch(e => console.log(e))
+        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
+        Alert.alert('Logged in!', `Hi ${(await response.json()).name}!`);
       } else {
         // type === 'cancel'
       }
     } catch ({ message }) {
       alert(`Facebook Login Error: ${message}`);
     }
+
 
 
   }
@@ -202,12 +207,12 @@ onPress={() => {
         <Text style={styles.loginText}>ENTRAR COM FACEBOOK</Text>
       </TouchableOpacity>
 
-       <TouchableOpacity style={styles.loginGoogle}>
+       <TouchableOpacity onPress={() => signGoogle()} style={styles.loginGoogle}>
        <FontIcon style={styles.icon} name="google" size={18} color="#d45f3f" />
         <Text style={styles.loginText}>ENTRAR COM GOOGLE</Text>
       </TouchableOpacity>
 <TouchableOpacity
-
+style={styles.reg}
 onPress={() => {
             props.navigation.navigate('Registrar')
 }} >
@@ -224,6 +229,9 @@ onPress={() => {
 }
  
 const styles = StyleSheet.create({
+  reg: {
+    marginTop: 50
+  },
   container: {
     flex: 1,
 paddingTop: 100,
@@ -274,7 +282,6 @@ icon: {
 ,
 criarConta: {
   color: '#aaaaaa',
-  marginTop: 50,
 },
   inputView: {
     backgroundColor: "#fff",
