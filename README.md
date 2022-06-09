@@ -33,7 +33,7 @@
   <a href="#links">Links</a> •
   <a href="#licenca">Licença</a>
 </p>
-![screenshot](./assets/images/banner.gif)
+![screenshot](https://raw.githubusercontent.com/ARCANGEL0/LarDoPet/master/assets/images/banner.gif)
 
 
 # Lar do pet 
