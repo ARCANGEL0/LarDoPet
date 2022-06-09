@@ -1,5 +1,6 @@
 node_modules/
 .expo/
+.expo-shared/
 dist/
 npm-debug.*
 *.jks
@@ -8,6 +9,8 @@ npm-debug.*
 *.key
 *.mobileprovision
 *.orig.*
+Google*
+google*
 web-build/
 
 # macOS
