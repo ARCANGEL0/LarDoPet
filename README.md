@@ -37,13 +37,9 @@
 
 # Lar do pet 
   
-<p style="
-margin-left: 25%;
-color: rgba(235, 61, 67,0.75);
-  font-family: 'VT323', monospace;
-  font-size: 25px;
-  text-shadow: 0 0 5px rgba(235, 61, 67,0.5), 0 0 15px rgba(252, 68, 71,1); 
-  "> PROJETO AINDA EM DESENVOLVIMENTO <img src="./assets/icons/cattyping.gif" height="26" width="35" > </p>
+
+<img src="./assets/images/header.png" height="50" width="800">
+ <img src="./assets/icons/cattyping.gif" height="46" width="55" > 
 
   <p style="">
     Este é um projeto para um aplicativo com intenção de facilitar e ajudar os animais e donos de pets em fornecer um lar e cuidados adequados para seus bichinhos.
