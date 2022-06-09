@@ -40,7 +40,7 @@
 
 <div style="display: flex; flex-direction: 'row';">
 <img src="./assets/images/header.png" height="40" width="650">
- <img src="./assets/icons/cattyping.gif" height="40" width="50" > 
+ <img src="./assets/icons/lovebird.gif" height="40" width="50" > 
 </div>
   <p style="">
     Este é um projeto para um aplicativo com intenção de facilitar e ajudar os animais e donos de pets em fornecer um lar e cuidados adequados para seus bichinhos.
@@ -119,10 +119,11 @@ Alguns links úteis para quem possui pets
 Apesar de ser apaixonado por animais e buscar fazer algo para ajudar pets a terem um lar e os devidos cuidados que merecem, estou fazendo este projeto inteiramente sozinho e sem intenções lucrativas. <br>
 No entanto não tenho muito tempo para desenvolver o projeto, e qualquer ajuda externa seria muito bem recebida </p>
 
+<div style="display: flex; flex-direction: 'row';">
 <a target="_onblank" href="https://github.com/ARCANGEL0/LarDoPet/pulls">
 <img src="https://img.shields.io/badge/Colabore com o projeto-6a0dad?style=for-the-badge&logo=Baidu&logoColor=white)"></a> &nbsp;&nbsp;&nbsp;
 <img src="./assets/icons/thumbsup.png" height="40" width="40"> 
-
+</div>
 
 <br>
 
