@@ -33,14 +33,15 @@
   <a href="#links">Links</a> •
   <a href="#licenca">Licença</a>
 </p>
-<img style="margin-left: 18%" src="./assets/images/banner.gif">
+&nbsp;&nbsp;&nbsp;<img style="margin-left: 18%" src="./assets/images/banner.gif">
 
 # Lar do pet 
   
 
+<div style="display: flex; flex-direction: 'row';">
 <img src="./assets/images/header.png" height="40" width="650">
- <img src="./assets/icons/cattyping.gif" height="46" width="55" > 
-
+ <img src="./assets/icons/cattyping.gif" height="40" width="50" > 
+</div>
   <p style="">
     Este é um projeto para um aplicativo com intenção de facilitar e ajudar os animais e donos de pets em fornecer um lar e cuidados adequados para seus bichinhos.
     <br>
