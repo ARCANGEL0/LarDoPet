@@ -9,7 +9,7 @@
 
 <p align="center">
   <a href="https://reactnative.dev">
-    <img src=https://img.shields.io/badge/Feito%20com%20React%20Native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB"
+    <img src=https://img.shields.io/badge/Native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB"
          alt="react">
   </a>
   <a href="https://api.whatsapp.com/send?phone=5513988504778"><img src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white"></a>
@@ -33,7 +33,7 @@
   <a href="#links">Links</a> •
   <a href="#licenca">Licença</a>
 </p>
-![screenshot](https://raw.githubusercontent.com/ARCANGEL0/LarDoPet/master/assets/images/banner.gif)
+[screenshot](https://raw.githubusercontent.com/ARCANGEL0/LarDoPet/master/assets/images/banner.gif)
 
 
 # Lar do pet 
