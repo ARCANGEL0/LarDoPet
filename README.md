@@ -38,7 +38,7 @@
 # Lar do pet 
   
 
-<img src="./assets/images/header.png" height="50" width="700">
+<img src="./assets/images/header.png" height="40" width="650">
  <img src="./assets/icons/cattyping.gif" height="46" width="55" > 
 
   <p style="">
