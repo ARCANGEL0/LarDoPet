@@ -34,7 +34,7 @@ export default function Registrar(props) {
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-    const [nome, setNome] = useState("");
+  const [nome, setNome] = useState("");
 
   const [telefone, setTelefone] = useState("");
   const [celular, setCelular] = useState("");
@@ -222,18 +222,19 @@ style={styles.scroll}
    
 
  <Text style={styles.inputText}> Nome </Text>
-
       <View style={[styles.inputView, {borderColor: btnState(fNome)}]}
       >
-        <TextInput
+       <TextInput
          value={nome}
 
     onBlur={() => setFnome('idle')}
         onFocus={() => setFnome('focus')}
  placeholder=" "
           placeholderTextColor="#cccccc"
-                   style={styles.TextInput}
-          onChangeText={(nome) => setNome(nome)}
+                   style={styles.btnView}
+          onChangeText={(nome) =>  {
+
+            setNome(nome)}}
         />
       </View>
 
@@ -439,7 +440,7 @@ type={'custom'}
  placeholder=" "
           placeholderTextColor="#cccccc"
                    style={styles.TextInput}
-          onChangeText={(email) => setEmail(email)}
+          onChangeText={(email) => setEmail(email.trimEnd())}
         />
       </View>
  

@@ -15,7 +15,14 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-
+    "plugins": [
+      [
+        "expo-facebook",
+        {
+          "userTrackingPermission": false
+        }
+      ]
+    ],
  
     "assetBundlePatterns": [
       "**/*"

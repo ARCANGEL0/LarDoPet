@@ -13,12 +13,11 @@ import {
 } from "react-native";
 
 
- import * as Facebook from 'expo-facebook'
-
+import * as Facebook  from "expo-facebook";
 
 import * as GoogleSignIn from 'expo-google-sign-in';
 
-import { getAuth, signInWithPopup, FacebookAuthProvider } from "firebase/auth";
+import { getAuth, signInWithRedirect, FacebookAuthProvider, GoogleAuthProvider } from "firebase/auth";
 
 
 import CheckBox from 'react-native-check-box'
@@ -41,48 +40,53 @@ export default function Login(props, {setLogin,setUsuario, setData, setLoading})
 
 const signGoogle = async () => {
 
-try {
-      await GoogleSignIn.askForPlayServicesAsync();
-      const { type, user } = await GoogleSignIn.signInAsync();
-      if (type === 'success') {
-        const user = await GoogleSignIn.signInSilentlyAsync();
-        alert(user)
-        alert('tst')
-      }
-    } catch ({ message }) {
-      alert('login: Error:' + message);
-    }
+
+ try {
+       await GoogleSignIn.askForPlayServicesAsync();
+       const { type, user } = await GoogleSignIn.signInAsync();
+       if (type === 'success') {
+         const user = await GoogleSignIn.signInSilentlyAsync();
+       props.setLoading(true);
+         
+                setTimeout(() => {
+
+                  props.setData(user);
+                 props.setLoading(false);
+
+ }
+                  ,
+                400);
+      alert('ok')
+       }
+     } catch ({ message }) {
+       alert('login: Error:' + message);
+     }
 
 }
 
 const signInFacebook = async () => {
   
+try {
+    await Facebook.initializeAsync({
+      appId: '739194317300790',
+    });
+    const { type, token, expirationDate, permissions, declinedPermissions } =
+      await Facebook.logInWithReadPermissionsAsync({
+        permissions: ['public_profile'],
+      });
+    if (type === 'success') {
+      // Get the user's name using Facebook's Graph API
+      const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=id,name,email`);
+      const usuario = response.json();
 
+alert('ok') 
+   } else {
+      // type === 'cancel'
+    }
+  } catch ({ message }) {
+    Alerta(`Erro ao logar com facebook`, `warning`, `danger`);
+  }
 
-const auth = getAuth();
-signInWithPopup(auth, provider)
-  .then((result) => {
-    // The signed-in user info.
-    const user = result.user;
-
-    // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-    const credential = FacebookAuthProvider.credentialFromResult(result);
-    const accessToken = credential.accessToken;
-
-    // ...
-  })
-  .catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.customData.email;
-    // The AuthCredential type that was used.
-    const credential = FacebookAuthProvider.credentialFromError(error);
-
-    // ...
-  });
-  
   }
 
 
