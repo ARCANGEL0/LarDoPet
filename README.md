@@ -27,11 +27,11 @@
 
 <p align="center">
   <a href="#lar-do-pet">Sobre o projeto</a> •
-  <a href="#como-usar">Como usar</a> •
-  <a href="#download">Download</a> •
-  <a href="#contribuicao">Contribuição</a> •
-  <a href="#links">Links</a> •
-  <a href="#licenca">Licença</a>
+  <a href="#como-usar-">Como usar</a> •
+  <a href="#download-">Download</a> •
+  <a href="#contribuicao-">Contribuição</a> •
+  <a href="#links-">Links</a> •
+  <a href="#licença">Licença</a>
 </p>
 &nbsp;&nbsp;&nbsp;<img style="margin-left: 18%" src="./assets/images/banner.gif">
 
