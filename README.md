@@ -29,7 +29,7 @@
   <a href="#lar-do-pet">Sobre o projeto</a> •
   <a href="#como-usar-">Como usar</a> •
   <a href="#download-">Download</a> •
-  <a href="#contribuicao-">Contribuição</a> •
+  <a href="#contribuição-">Contribuição</a> •
   <a href="#links-">Links</a> •
   <a href="#licença">Licença</a>
 </p>
@@ -111,7 +111,7 @@ Alguns links úteis para quem possui pets
 <br><br>
 
 
-## Contribuição <img src="./assets/icons/queen_cat.png" height="30" width="30">
+# Contribuição <img src="./assets/icons/queen_cat.png" height="30" width="30">
 
 <p style="
   font-size: 1em;
