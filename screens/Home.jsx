@@ -8,7 +8,30 @@ const Home = (props, {setLogin,setUsuario, setData, Logout, setLoading}) => {
   return (
     <SafeAreaView
       style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>logado</Text>
+
+          <View style={styles.container}>
+
+          <View style={styles.header} >
+
+
+        <TouchableOpacity style={styles.returnBtn}
+
+        onPress={() => {
+            props.navigation.navigate('Login')
+}}>
+      <IoIcons   style={styles.return} name="return-down-back" size={36} color="#fff" />
+</TouchableOpacity>
+ </View>
+
+      <StatusBar style="auto" />
+
+      <View style={styles.body}>
+
+
+
+</View>
+</View>
+{/*      <Text>logado</Text>
 
       <TouchableOpacity
         onPress={() => {
@@ -19,131 +42,59 @@ const Home = (props, {setLogin,setUsuario, setData, Logout, setLoading}) => {
                     <MaterialIcon   style={styles.icon} name="login" size={18} color="#53bd57" />
 
         <Text style={styles.loginText}>LogOut</Text>
-      </TouchableOpacity>
+      </TouchableOpacity>*/}
+
+
 
     </SafeAreaView>
   );
 };
 
+
  
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
-paddingTop: 100,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+
   },
-  image: {
-    resizeMode: 'contain',
-    height: 200,
-    width: 200,
-marginTop: -100,
-marginBottom: 0
-
-
+returnBtn: {
+marginBottom: 150,
 },
+return: {
+  position: 'absolute',
+  paddingRight: 50,
+  paddingTop: 40,
 
-inputText: { 
-color: '#cccccc',
-marginRight: 250,
-marginBottom: 5,
-fontWeight: '800',
-fontFamily: 'notoserif',
-
-},
-redefinir: {
-  marginLeft: 50,
-  color: '#85D87D',
-  fontSize:12,
-},
-
-
-opcoes : {
-flexDirection:"row",
-justifyContent:'space-between',
-
-
-},
-
-manter_conectado: {
-  fontSize: 12,
-  marginLeft: 5,
-  color: '#66666'
-},
-icon: {
-  marginRight: 20
 }
-,
-criarConta: {
-  color: '#aaaaaa',
-  marginTop: 50,
-},
-  inputView: {
-    backgroundColor: "#fff",
-    borderRadius: 10,
-      borderWidth: 1,
-    borderColor: "#c1c1c1",
-    width: "85%",
-  flexDirection: 'row',
-paddingLeft: 10,
-   height: 45,
-    marginBottom: 20,
- 
-    alignItems: "center",
+
+,  body: {
+    backgroundColor: '#fcfcfc',
+borderWidth: 1,
+borderColor: '#cecece',
+    flex:1, 
+    position: 'absolute',
+top: 180,
+height: '70%',
+borderRadius: 10,
+
   },
- 
-  TextInput: {
-    height: 50,
-    flex: 1,
-width: 100
-  },
- 
-  forgot_button: {
-    height: 30,
-    marginBottom: 30,
-  },
- 
-  loginBtn: {
-     flexDirection: 'row',
-    width: "80%",
-    borderRadius: 15,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 20,
-    backgroundColor: "#8eed92",
+    header: {
+    position: 'absolute',
+    top: 0,
+    backgroundColor: '#7ED957',
+   flexDirection: 'row',
+
+   width: '100%',
+   height: '50%',
+   paddingLeft: 15
+
   },
 
-   loginFace: {
-         flexDirection: 'row',
+  });
 
-    width: "80%",
-    borderRadius: 15,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 12,
-    backgroundColor: "#4167B0",
-  },
-
-   loginGoogle: {
-         flexDirection: 'row',
-
-    width: "80%",
-    borderRadius: 15,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 12,
-    backgroundColor: "#FE724C",
-    marginBottom: -40
-  },
-  loginText: {
-        color: '#fff',
-        marginRight: 30,
-
-  }
-});
 
 export default Home;
